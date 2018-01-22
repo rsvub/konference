@@ -1,0 +1,11 @@
+<h1>Seznam příspěvků</h1>
+<table>
+<?php foreach ($clanky as $clanek) : ?>
+        <tr>
+                <td>
+                        <h2><a href="clanek/<?= $prispevek['url'] ?>"><?= $prispevek['titulek'] ?></a></h2>
+                        <?= $prispevek['popisek'] ?>
+                </td>
+        </tr>
+<?php endforeach ?>
+</table>
