@@ -1,11 +1,44 @@
-<h1>Seznam příspěvků</h1>
-<table>
-<?php foreach ($clanky as $clanek) : ?>
+<h2>Seznam příspěvků</h2>
+<table class="table table-striped">
+    <thead>
         <tr>
-                <td>
-                        <h2><a href="clanek/<?= $prispevek['url'] ?>"><?= $prispevek['titulek'] ?></a></h2>
-                        <?= $prispevek['popisek'] ?>
-                </td>
+            <th>
+                Datum příspěvku
+            </th>
+            <th>
+                Název příspěvku
+            </th>
+            <th>
+                Popis příspěvku
+            </th>
+            <th>
+                Vymaž příspěvek
+            </th>
+            <th>
+                Přihlášený užavatel:
+            </th>
         </tr>
-<?php endforeach ?>
+    </thead>
+    <tbody>
+        <?php foreach ($prispevky as $prispevek) : ?>
+            <tr>
+                <td>
+                    <?= $prispevek['datum'] ?>
+                </td>
+                <td>
+                    <?= $prispevek['nazev'] ?>
+                </td>
+                <td>
+                    <?= $prispevek['text'] ?>
+                </td>
+                <td>
+                    <img src="img/delete-icon.png">
+                </td>
+                <td>
+                    <?= $prispevek['jmeno_prijmeni'] ?>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
 </table>
+<h4><a href="prispevek">Nový příspěvek</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="uvod">Odhlásit se</a></h4>
