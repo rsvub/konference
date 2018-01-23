@@ -26,10 +26,18 @@ class Db {
         return $navrat->fetch();
     }
 
+    //Funkce pro výpis všech vyhovujících záznamů z databáze
     public static function dotazVsechny($dotaz, $parametry = array()) {
         $navrat = self::$spojeni->prepare($dotaz);
         $navrat->execute($parametry);
         return $navrat->fetchAll();
+    }
+    
+    //Funkce pro vložení záznamu do tabulky
+    public static function vloz($tabulka, $parametry = array()) {
+        return self::dotaz("INSERT INTO `$tabulka` (`" .
+                        implode('`, `', array_keys($parametry)) .
+                        "`) VALUES (" . str_repeat('?,', sizeOf($parametry) - 1) . "?)", array_values($parametry));
     }
 
 }
