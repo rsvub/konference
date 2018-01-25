@@ -50,7 +50,9 @@
 
 
         <div class="container-fluid bg-3 text-center">
-
+            <?php foreach ($zpravy as $zprava) : ?>
+            <p style="color:red; font-weight: bolder"><?= $zprava ?></p>
+            <?php endforeach ?>
             <?php $this->kontroler->vypisPohled(); // vložení aktuálního pohledu do šablony ?>
         </div>
         <footer class="container-fluid bg-2 text-center">

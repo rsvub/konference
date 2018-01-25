@@ -12,4 +12,12 @@ class SpravcePrispevku {
         );
     }
 
+    //Funkce pro odstranění příspěvku
+    public function odstranPrispevek($id_prispevek) {
+        Db::dotaz('
+			DELETE FROM prispevek
+			WHERE id_prispevek = ?
+		', array($id_prispevek));
+    }
+
 }

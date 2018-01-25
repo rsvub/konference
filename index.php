@@ -1,6 +1,6 @@
 <?php
 
-
+session_start();
 //Nastavení interního kódování
 mb_internal_encoding("UTF-8");
 
