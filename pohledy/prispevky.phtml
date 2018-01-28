@@ -17,6 +17,12 @@
             <th>
                 Přihlášený užavatel:
             </th>
+            <th>
+                Stav příspěvku:
+            </th>
+            <th>
+                Hodnocení:
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -26,19 +32,25 @@
                     <?= $prispevek['datum'] ?>
                 </td>
                 <td>
-                    <?= $prispevek['nazev'] ?>
+                    <a href="eprispevek/<?= $prispevek['id_prispevek'] ?>/<?= $prispevek['id_autor'] ?>"><?= $prispevek['nazev'] ?></a>
                 </td>
                 <td>
                     <?= $prispevek['text'] ?>
                 </td>
                 <td>
-                    <img src="img/delete-icon.png">
+                    <a href="prispevky/vymazat/<?= $prispevek['id_prispevek'] ?>/<?= $prispevek['id_autor'] ?>"><img src="img/delete-icon.png"></a>
                 </td>
                 <td>
                     <?= $prispevek['jmeno_prijmeni'] ?>
+                </td>
+                <td>
+                    <?= $prispevek['stav'] ?>
+                </td>
+                <td>
+                    <?= $prispevek['hodnoceni'] ?>
                 </td>
             </tr>
         <?php endforeach ?>
     </tbody>
 </table>
-<h4><a href="prispevek">Nový příspěvek</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="uvod">Odhlásit se</a></h4>
+<h4><?php foreach ($iduzivatele as $iduzivatel) : ?><a href="prispevek/<?= $iduzivatel['id_uzivatel'] ?>">Nový příspěvek</a><?php endforeach ?> &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>

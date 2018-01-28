@@ -5,8 +5,8 @@ class SpravceUzivatelu {
 
     // Vrátí otisk hesla
     public function vratOtisk($heslo) {
-        $sul = 'ByuT1S@w@';
-        return hash('sha256', $heslo . $sul);
+        $var = 'ByuT1S@w@';
+        return hash('sha256', $heslo . $var);
     }
 
     // Registruje nového uživatele do systému
@@ -17,7 +17,7 @@ class SpravceUzivatelu {
             throw new ChybaUzivatele('Hesla nesouhlasí.');
         $uzivatel = array(
             'jmeno' => $jmeno,
-            'heslo' => $heslo,
+            'heslo' => $this->vratOtisk($heslo),
             'jmeno_prijmeni' => $jmeno_prijmeni,
             'email' => $email,
         );
@@ -34,7 +34,7 @@ class SpravceUzivatelu {
                         SELECT id_uzivatel, jmeno, heslo, jmeno_prijmeni, typ
                         FROM uzivatel
                         WHERE jmeno = ? AND heslo = ?
-                ', array($jmeno, $heslo));
+                ', array($jmeno, $this->vratOtisk($heslo)));
         if (!$uzivatel)
             throw new ChybaUzivatele('Neplatné jméno nebo heslo.');
         $_SESSION['uzivatel'] = $uzivatel;
@@ -44,6 +44,17 @@ class SpravceUzivatelu {
     public function odhlas() {
         unset($_SESSION['uzivatel']);
     }
+
+    //Vrátí Id uiživatele
+    public function vratIdUzivatele($uzivatel) {
+        return Db::dotazVsechny('
+                        SELECT `id_uzivatel`, `jmeno_prijmeni`, `typ`
+                        FROM `uzivatel`
+                        WHERE `jmeno` = ?', array($uzivatel)
+        );
+    }
+
+
 
     // Zjistí, zda je přihlášený uživatel administrátor
     public function vratUzivatele() {

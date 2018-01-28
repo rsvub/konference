@@ -48,10 +48,15 @@ class Db {
     }
 
     //Funkce pro editaci záznamu v tabulce
-    public static function zmen($tabulka, $hodnoty = array(), $podminka, $parametry = array()) {
-        return self::dotaz("UPDATE `$tabulka` SET `" .
-                        implode('` = ?, `', array_keys($hodnoty)) .
-                        "` = ? " . $podminka, array_merge(array_values($hodnoty), $parametry));
+    public static function zmen($tabulka, $parametry = array()) {
+        return self::dotaz("REPLACE INTO `$tabulka` (`" .
+                        implode('`, `', array_keys($parametry)) .
+                        "`) VALUES (" . str_repeat('?,', sizeOf($parametry) - 1) . "?)", array_values($parametry));
+    }
+
+    public static function vyber($tabulka, $hodnoty = array(), $podminka, $parametry = array()) {
+        return self::dotazVsechny("SELECT `" . implode('`, `', array_keys($hodnoty)) . "`
+                        FROM `$tabulka`" . $podminka,array_values($parametry));
     }
 
 }

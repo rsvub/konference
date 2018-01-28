@@ -1,16 +1,18 @@
-<h1>Nový příspěvek</h1><br><br>
+<h1>Editace příspěvku</h1><br><br>
 <form method="post">
     <div class="form-group">
+        <?php foreach ($eprispevek as $prispevek) : ?>
         Název příspěvku: ***<br /><br>
-        <input type="text" class="form-control" name="nazev" /><br /><br>
+        <input type="text" class="form-control" name="nazev" value="<?= $prispevek['nazev'] ?>" /><br /><br>
         Popis příspěvku: ***<br /><br>
-        <textarea type="text" rows="5" class="form-control" name="text" /></textarea><br /><br>
+        <textarea type="text" rows="5" class="form-control" name="text"><?= $prispevek['text'] ?></textarea><br /><br>
         PDF Soubor:<br /><br>
         <input type="file"  name="soubor" /><br /><br>
         Zadejte součet 3 + 4:<br /><br>
         <input type="text" class="form-control"  name="soucet" /><br /><br>
+        <?php endforeach ?>
     </div>
-    <input type="submit" class="btn btn-default" value="Vlož" />
+    <input type="submit" class="btn btn-default" value="Uprav" />
 </form>
 
 <p style="color:red; font-weight: bold">*** Povinný údaj</p>
