@@ -1,4 +1,4 @@
-<h2>Seznam uživatelů</h2>
+<h2>Správa uživatelů</h2>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -11,13 +11,16 @@
             <th>
                 Typ
             </th>
+            <th>
+                Vymaž uživatele
+            </th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($uzivatele as $uzivatel) : ?>
             <tr>
                 <td>
-                    <?= $uzivatel['jmeno_prijmeni'] ?>
+                    <a href="euzivatele/<?= $uzivatel['id_uzivatel'] ?>"><?= $uzivatel['jmeno_prijmeni'] ?></a>
                 </td>
                 <td>
                     <?= $uzivatel['email'] ?>
@@ -25,8 +28,11 @@
                 <td>
                     <?= $uzivatel['typ'] ?>
                 </td>
+                <td>
+                    <a href="uzivatele/vymazat/<?= $uzivatel['id_uzivatel'] ?>"><img src="img/delete-icon.png"></a>
+                </td>
             </tr>
         <?php endforeach ?>
     </tbody>
 </table>
-<h4>&nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>
+<h4><a href="sprispevky">Spravovat příspěvky</a><br><br>Přihlášený uživatel: Administrátor - <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>

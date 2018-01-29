@@ -55,7 +55,7 @@ class Db {
     }
 
     public static function vyber($tabulka, $hodnoty = array(), $podminka, $parametry = array()) {
-        return self::dotazVsechny("SELECT `" . implode('`, `', array_keys($hodnoty)) . "`
+        return self::dotazVsechny("SELECT *
                         FROM `$tabulka`" . $podminka,array_values($parametry));
     }
     

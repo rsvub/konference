@@ -16,13 +16,17 @@ class PrihlaseniKontroler extends Kontroler {
             try {
                 $spravceUzivatelu->prihlas($_POST['jmeno'], $_POST['heslo']);
                 $iduzivatele = $spravceUzivatelu->vratIdUzivatele($_POST['jmeno']);
-                foreach ($iduzivatele as $iduzivatel)
-                    ;
+                foreach ($iduzivatele as $iduzivatel);
                 $id_uzivatel = $iduzivatel['id_uzivatel'];
+                $jmeno_uzivatel = $iduzivatel['jmeno_prijmeni'];
                 if ($iduzivatel['typ'] == 'A') {
-                    $this->presmeruj('uzivatele');
+                    $this->pridejZpravu('Byl jste úspěšně přihlášen: ' . $jmeno_uzivatel);
+                    $this->presmeruj('uzivatele/' . $id_uzivatel);
+                }if ($iduzivatel['typ'] == 'R') {
+                    $this->pridejZpravu('Byl jste úspěšně přihlášen: ' . $jmeno_uzivatel);
+                    $this->presmeruj('recenze/' . $id_uzivatel);
                 } else {
-                    $this->pridejZpravu('Byl jste úspěšně přihlášen.');
+                    $this->pridejZpravu('Byl jste úspěšně přihlášen: ' . $jmeno_uzivatel);
                     $this->presmeruj('prispevky/' . $id_uzivatel);
                 }
             } catch (ChybaUzivatele $chyba) {

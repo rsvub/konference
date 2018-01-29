@@ -12,7 +12,7 @@ class PrispevekKontroler extends Kontroler {
                 $spravcePrispevku->vlozNovyPrispevek($parametry[0], $_POST['nazev'], $_POST['text'], $_POST['soubor'], $_POST['soucet']);
                 $this->pridejZpravu('Příspěvek je úspěšně vložen.');
                 $this->presmeruj('prispevky/' . $parametry[0]);
-            } catch (Prispevek $chyba) {
+            } catch (ChybaPrispevek $chyba) {
                 $this->pridejZpravu($chyba->getMessage());
             }
         }

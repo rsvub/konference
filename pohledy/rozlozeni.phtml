@@ -37,26 +37,23 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="uvod">Home</a></li>
+                    <li><a href="pprispevky">PUBLIKOVANÉ PŘÍSPĚVKY</a></li>
+                    <li><a href="autor">POKYNY PRO AUTORY</a></li>
                 </ul>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="pprispevky">PUBLIKOVANÉ PŘÍSPĚVKY</a></li>
-                        <li><a href="autor">POKYNY PRO AUTORY</a></li>
-                    </ul>
-                </div>
             </div>
-        </nav>
-
-
-        <div class="container-fluid bg-3 text-center">
-            <?php foreach ($zpravy as $zprava) : ?>
-            <p style="color:red; font-weight: bolder"><?= $zprava ?></p>
-            <?php endforeach ?>
-            <?php $this->kontroler->vypisPohled(); // vložení aktuálního pohledu do šablony ?>
         </div>
-        <footer class="container-fluid bg-2 text-center">
-            <p>Webová konference ©2017, Radek Švub</p> 
-        </footer>
+    </nav>
 
-    </body>
+
+    <div class="container-fluid bg-3 text-center">
+        <?php foreach ($zpravy as $zprava) : ?>
+            <p style="color:red; font-weight: bolder"><?= $zprava ?></p>
+        <?php endforeach ?>
+        <?php $this->kontroler->vypisPohled(); // vložení aktuálního pohledu do šablony ?>
+    </div>
+    <footer class="container-fluid bg-2 text-center">
+        <p>Webová konference ©2017, Radek Švub</p> 
+    </footer>
+
+</body>
 </html>

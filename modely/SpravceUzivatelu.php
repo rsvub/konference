@@ -48,16 +48,15 @@ class SpravceUzivatelu {
     //Vrátí Id uiživatele
     public function vratIdUzivatele($uzivatel) {
         return Db::dotazVsechny('
-                        SELECT `id_uzivatel`, `jmeno_prijmeni`, `typ`
+                        SELECT `id_uzivatel`, `jmeno`, `jmeno_prijmeni`, `typ`
                         FROM `uzivatel`
                         WHERE `jmeno` = ?', array($uzivatel)
         );
     }
 
-    public function zobrazUzivatele(){
-            return Db::vyberVsechny(`uzivatel`);
+    public function zobrazUzivatele() {
+        return Db::vyberVsechny('uzivatel');
     }
-
 
     // Zjistí, zda je přihlášený uživatel administrátor
     public function vratUzivatele() {

@@ -53,4 +53,5 @@
         <?php endforeach ?>
     </tbody>
 </table>
-<h4><?php foreach ($iduzivatele as $iduzivatel) : ?><a href="prispevek/<?= $iduzivatel['id_uzivatel'] ?>">Nový příspěvek</a><?php endforeach ?> &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>
+<h4><?php foreach ($iduzivatele as $iduzivatel) : ?><a href="prispevek/<?= $iduzivatel['id_uzivatel'] ?>">Nový příspěvek</a><br><br>
+    Přihlášený uživatel: <?= $iduzivatel['jmeno_prijmeni'] ?><?php endforeach ?> &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>
