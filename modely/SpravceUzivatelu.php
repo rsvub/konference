@@ -54,6 +54,9 @@ class SpravceUzivatelu {
         );
     }
 
+    public function zobrazUzivatele(){
+            return Db::vyberVsechny(`uzivatel`);
+    }
 
 
     // Zjistí, zda je přihlášený uživatel administrátor

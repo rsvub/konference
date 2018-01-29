@@ -1,0 +1,32 @@
+<h2>Seznam uživatelů</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Jméno a příjmení
+            </th>
+            <th>
+                E-mail
+            </th>
+            <th>
+                Typ
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($uzivatele as $uzivatel) : ?>
+            <tr>
+                <td>
+                    <?= $uzivatel['jmeno_prijmeni'] ?>
+                </td>
+                <td>
+                    <?= $uzivatel['email'] ?>
+                </td>
+                <td>
+                    <?= $uzivatel['typ'] ?>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<h4>&nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>
