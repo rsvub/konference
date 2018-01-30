@@ -1,0 +1,35 @@
+<h1>Editace posudku</h1>
+<h3>Název: <span class="bg-info"><?php foreach ($rprispevek as $prispevek) : ?><?= $prispevek['nazev'] ?></span></h3>
+<br>
+<a href="rprispevek/stahnout/<?= $prispevek['id_prispevek'] ?>" class="bg-success">STÁHNOUT PŘÍSPĚVEK</a><br><br>
+<?php endforeach ?>
+<form method="post">
+    <div class="form-group">
+        <label for="org">ORIGINALITA: ***</label>
+        <select class="form-control" id="sel1" name="ciselnik_originalita">
+            <option value="4">4 = Originální</option>
+            <option value="3">3 = Pár originálních myšlenek</option>
+            <option value="2">2 = Nic nového</option>
+            <option value="1">1 = Opsáno</option>
+        </select><br />
+        <label for="org">TÉMA: ***</label>
+        <select class="form-control" id="sel1" name="ciselnik_tema">
+            <option value="4">4 = Výborně se drží tématu</option>
+            <option value="3">3 = Relevantní</option>
+            <option value="2">2 = Vcelku relevantní</option>
+            <option value="1">1 = Irelevantní</option>
+        </select><br />
+        <label for="dop">DOPORUČENÍ: ***</label>
+        <select class="form-control" id="sel1" name="ciselnik_doporuceni">
+            <option value="4">4 = Velice doporučuji</option>
+            <option value="3">3 = Doporučuji</option>
+            <option value="2">2 = Doporučuji s výhradou</option>
+            <option value="1">1 = Nedoporučuji</option>
+        </select><br />
+        <label for="poz">Poznámky:</label>
+        <textarea type="text" rows="5" class="form-control" name="poznamka" /></textarea><br /><br>
+    </div>
+    <input type="submit" class="btn btn-default" value="Vlož" />
+</form>
+
+<p style="color:red; font-weight: bold">*** Povinný údaj</p>

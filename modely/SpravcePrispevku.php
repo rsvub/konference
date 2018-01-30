@@ -49,11 +49,30 @@ class SpravcePrispevku {
             'id_rprispevek' => $id_rprispevek,
             'id_recenzent' => $id_recenzent,
         );
-        //try {
+        try {
             Db::vloz('recenze', $sprispevek);
-        //} catch (PDOException $chyba) {
-        //    throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
-        //}
+        } catch (PDOException $chyba) {
+            throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
+        }
+    }
+    
+    //Funkce vloží posudek k příspěvku
+    public function vlozPosudek($id, $poznamka, $ciselnik_originalita, $ciselnik_tema, $ciselnik_doporuceni) {
+        $sprispevek = array(
+            'poznamka' => $poznamka,
+            'ciselnik_originalita' => $ciselnik_originalita,
+            'ciselnik_tema' => $ciselnik_tema,
+            'ciselnik_doporuceni' => $ciselnik_doporuceni,
+        );
+        try {
+            Db::uprav('recenze', $sprispevek, 'WHERE `id_rprispevek` = ? AND `id_recenzent` = ?', $id);
+        } catch (PDOException $chyba) {
+            throw new ChybaPrispevek('Nepodařilo se upravit záznam.');
+        }
+    }
+
+    public function upravUziv() {
+        return Db::dotaz('UPDATE uzivatel SET typ = "R" WHERE typ = "R"');
     }
 
     //Funkce pro zobrazení všch článků od přihlášeného uživatele
@@ -68,10 +87,10 @@ class SpravcePrispevku {
 
     public function zobrazRecenzeUzivatele($uzivatel) {
         return Db::dotazVsechny('
-                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`, `jmeno_autor`, `stav`,`hodnoceni`
+                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `hodnoceni`, `id_recenzent`
                         FROM `recenze`, `prispevek`
-                        WHERE `id_autor` = `id_recenzent`
-                        AND `id_autor` = ?', array($uzivatel)
+                        WHERE `id_rprispevek` = `id_prispevek`
+                        AND `id_recenzent` = ?', array($uzivatel)
         );
     }
 
@@ -82,6 +101,15 @@ class SpravcePrispevku {
                         FROM `prispevek`
                         WHERE `id_prispevek` = ?', array($id_prispevek)
         );
+    }
+
+    public function stahniPrispevek($id_prispevek) {
+        $gotten = @mysqli_query("select * from prispevek where id_prispevek = . $id_prispevek");
+        $row = @mysqli_fetch_array($gotten);
+        $bytes = $row['soubor'];
+        header("Content-type: application/pdf");
+        header('Content-disposition: attachment; filename="thing.pdf"');
+        print $bytes;
     }
 
     //Funkce pro odstranění příspěvku
@@ -97,17 +125,30 @@ class SpravcePrispevku {
         return Db::vyber('uzivatel', $uzivatel, 'WHERE `id_uzivatel` = ?', $uzivatel);
     }
 
-    //Funkce vrátí údaje o uživateli podle id uživatele
-    public function vratIdUzivatele() {
-        $uzivatel = array(
-            'id_uzivatel' => 1,
+    //Funkce vrátí údaje o uživateli podle id prispevku
+    public function vratIdUzivatele($uzivatel) {
+        return Db::dotazVsechny('
+                        SELECT `id_prispevek`, `nazev`, `jmeno_autor`, `id_uzivatel`, `jmeno_prijmeni`
+                        FROM `uzivatel`, `prispevek`
+                        WHERE `typ` = "R"
+                        AND `id_prispevek` = ?', array($uzivatel)
         );
-        return Db::vyber('uzivatel', $uzivatel, 'WHERE `typ` = ?', array('R'));
     }
 
     //Funkce vrátí seznam všech uživatelů
     public function zobrazPrispevky() {
         return Db::vyberVsechny('prispevek');
+    }
+
+    public function zobrazPrispevkyAdmin() {
+        return Db::dotazVsechny('
+                        SELECT `nazev`, `jmeno_autor`, `datum`, `id_prispevek`, `stav`, `jmeno_recenzent` 
+                        FROM `prispevek` LEFT JOIN `recenze` ON `id_prispevek`=`id_rprispevek` ORDER BY `datum`'
+        );
+    }
+
+    public function upload() {
+        
     }
 
 }

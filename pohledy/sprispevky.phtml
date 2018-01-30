@@ -15,10 +15,13 @@
                 Recenzenti
             </th>
             <th>
-                Stav příspěvku:
+                Přiřaď recenzenta
             </th>
             <th>
-                Hodnocení:
+                Rozhodnutí
+            </th>
+            <th>
+                Stav příspěvku
             </th>
         </tr>
     </thead>
@@ -35,13 +38,16 @@
                     <?= $sprispevek['jmeno_autor'] ?>
                 </td>
                 <td>
-                    <?= $sprispevek['jmeno_autor'] ?>
+                    <?= $sprispevek['jmeno_recenzent'] ?>
+                </td>
+                <td>
+                    <a href="sprispevek/<?= $sprispevek['id_prispevek'] ?>"><button type="button" class="btn btn-info">Přidej recenzenta</button></a>
+                </td>
+                <td>
+                    <a href="sprispevek2/<?= $sprispevek['id_prispevek'] ?>"><button type="button" class="btn btn-danger">Zadej stav příspěvku</button></a>
                 </td>
                 <td>
                     <?= $sprispevek['stav'] ?>
-                </td>
-                <td>
-                    <?= $sprispevek['hodnoceni'] ?>
                 </td>
             </tr>
         <?php endforeach ?>

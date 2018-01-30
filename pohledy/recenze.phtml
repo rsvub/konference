@@ -1,4 +1,4 @@
-<h2>Seznam příspěvků</h2>
+<h2>Seznam příspěvků k posouzení</h2>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -12,9 +12,6 @@
                 Popis příspěvku
             </th>
             <th>
-                Stav příspěvku:
-            </th>
-            <th>
                 Hodnocení:
             </th>
         </tr>
@@ -26,13 +23,10 @@
                     <?= $prispevek['datum'] ?>
                 </td>
                 <td>
-                    <a href="eprispevek/<?= $prispevek['id_prispevek'] ?>/<?= $prispevek['id_autor'] ?>"><?= $prispevek['nazev'] ?></a>
+                    <a href="rprispevek/<?= $prispevek['id_prispevek'] ?>/<?= $prispevek['id_recenzent'] ?>"><?= $prispevek['nazev'] ?></a>
                 </td>
                 <td>
                     <?= $prispevek['text'] ?>
-                </td>
-                <td>
-                    <?= $prispevek['stav'] ?>
                 </td>
                 <td>
                     <?= $prispevek['hodnoceni'] ?>
@@ -41,4 +35,4 @@
         <?php endforeach ?>
     </tbody>
 </table>
-<h4>Přihlášený uživatel: <?php foreach ($prispevky as $prispevek) : ?><?= $prispevek['jmeno_autor'] ?><?php endforeach ?> &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>
+<h4>Přihlášený uživatel: <?php foreach ($recenzenti as $recenzent) : ?><?= $recenzent['jmeno_prijmeni'] ?><?php endforeach ?> &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>

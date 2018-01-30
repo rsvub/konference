@@ -1,4 +1,4 @@
-<h3>Vyber recenzenty pro příspěvek:<br><br><?php foreach ($rprispevky as $rprispevek) : ?><?= $rprispevek['nazev'] ?><br><br>od autora:<br><br><?= $rprispevek['jmeno_autor'] ?><?php endforeach ?></h3>
+<h3>Vyber recenzenty pro příspěvek:<br><br><span class="bg-info"><?php foreach ($rprispevky as $rprispevek) : ?><?= $rprispevek['nazev'] ?></span><br><br>od autora:<br><br><span class="bg-info"><?= $rprispevek['jmeno_autor'] ?><?php endforeach ?></span></h3>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -11,7 +11,7 @@
         <?php foreach ($recenzenti as $recenzent) : ?>
             <tr>
                 <td>
-                    <a href="sprispevek/vlozRecenzenta/<?= $recenzent['id_uzivatel'] ?>"><?= $recenzent['jmeno_prijmeni'] ?></a>
+                    <a href="sprispevek/vlozRecenzenta/<?= $recenzent['id_uzivatel'] ?>/<?= $recenzent['id_prispevek'] ?>"><?= $recenzent['jmeno_prijmeni'] ?></a>
                 </td>
             </tr>
         <?php endforeach ?>

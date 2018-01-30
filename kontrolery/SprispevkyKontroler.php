@@ -12,7 +12,7 @@ class SprispevkyKontroler extends Kontroler {
             $this->presmeruj('sprispevky/');
         }
         // Získání příspěvků
-        $sprispevky = $spravcePrispevku->zobrazPrispevky();
+        $sprispevky = $spravcePrispevku->zobrazPrispevkyAdmin();
         $this->data['sprispevky'] = $sprispevky;
         $this->pohled = 'sprispevky';
     }
