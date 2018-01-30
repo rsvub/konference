@@ -1,0 +1,20 @@
+<h3>Vyber recenzenty pro příspěvek:<br><br><?php foreach ($rprispevky as $rprispevek) : ?><?= $rprispevek['nazev'] ?><br><br>od autora:<br><br><?= $rprispevek['jmeno_autor'] ?><?php endforeach ?></h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Recenzent
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($recenzenti as $recenzent) : ?>
+            <tr>
+                <td>
+                    <a href="sprispevek/vlozRecenzenta/<?= $recenzent['id_uzivatel'] ?>"><?= $recenzent['jmeno_prijmeni'] ?></a>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<h4>Prihlášený uživatel: Administrátor &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>
