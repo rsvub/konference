@@ -49,11 +49,11 @@ class SpravcePrispevku {
             'id_rprispevek' => $id_rprispevek,
             'id_recenzent' => $id_recenzent,
         );
-        try {
+        //try {
             Db::vloz('recenze', $sprispevek);
-        } catch (PDOException $chyba) {
-            throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
-        }
+        //} catch (PDOException $chyba) {
+        //    throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
+        //}
     }
 
     //Funkce pro zobrazení všch článků od přihlášeného uživatele
