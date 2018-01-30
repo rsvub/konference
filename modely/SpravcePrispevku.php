@@ -3,7 +3,7 @@
 class SpravcePrispevku {
 
     //Nový příspěvek do systému
-    public function vlozNovyPrispevek($id_autor, $nazev, $text, $soubor, $soucet) {
+    public function vlozNovyPrispevek($id_autor, $nazev, $text, $soubor, $soubor_nazev, $soucet) {
         if ($soucet != 7)
             throw new ChybaPrispevek('Chybně vyplněný antispam.');
         //$soubor = fopen($file, 'rb');
@@ -12,16 +12,17 @@ class SpravcePrispevku {
             'nazev' => $nazev,
             'text' => $text,
             'soubor' => $soubor,
+            'soubor_nazev' => $soubor_nazev,
         );
-        try {
+        //try {
             Db::vloz('prispevek', $prispevek);
-        } catch (PDOException $chyba) {
-            throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
-        }
+        //} catch (PDOException $chyba) {
+        //    throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
+        //}
     }
-
+    
     //Nový příspěvek do systému
-    public function editujPrispevek($id_prispevek, $id_autor, $nazev, $text, $soubor, $soucet) {
+    public function editujPrispevek($id_prispevek, $id_autor, $nazev, $text, $soubor, $soubor_nazev, $soucet) {
         if ($soucet != 7)
             throw new ChybaPrispevek('Chybně vyplněný antispam.');
         //$soubor = fopen($file, 'rb');
@@ -31,6 +32,7 @@ class SpravcePrispevku {
             'nazev' => $nazev,
             'text' => $text,
             'soubor' => $soubor,
+            'soubor_nazev' => $soubor_nazev,
         );
         try {
             Db::zmen('prispevek', $eprispevek);
@@ -48,7 +50,8 @@ class SpravcePrispevku {
                         AND `id_uzivatel` = ?', array($uzivatel)
         );
     }
-
+    
+    //Fuinkce vrátí data jednoho příspěvku podle id příspěvku
     public function zobrazPrispevek($id_prispevek) {
         return Db::dotazVsechny('
                         SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`
@@ -59,17 +62,20 @@ class SpravcePrispevku {
 
     //Funkce pro odstranění příspěvku
     public function odstranPrispevek($id_prispevek) {
-        Db::dotaz('
-			DELETE FROM prispevek
-			WHERE id_prispevek = ?
-		', array($id_prispevek));
+        Db::vymazZaznam('prispevek', 'WHERE `id_prispevek` = ?', array($id_prispevek));
     }
 
+    //Funkce vrátí údaje o uživateli podle id uživatele
     public function vratIdUzivatele2($id_uzivatel) {
         $uzivatel = array(
             'id_uzivatel' => $id_uzivatel,
         );
         return Db::vyber('uzivatel', $uzivatel, 'WHERE `id_uzivatel` = ?', $uzivatel);
+    }
+    
+    //Funkce vrátí seznam všech uživatelů
+    public function zobrazPrispevky() {
+        return Db::vyberVsechny('prispevek');
     }
 
 }

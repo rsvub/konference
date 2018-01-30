@@ -1,0 +1,44 @@
+<h2>Spravovat příspěvky</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Datum příspěvku
+            </th>
+            <th>
+                Název příspěvku
+            </th>
+            <th>
+                Autor příspěvku
+            </th>
+            <th>
+                Stav příspěvku:
+            </th>
+            <th>
+                Hodnocení:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($sprispevky as $sprispevek) : ?>
+            <tr>
+                <td>
+                    <?= $sprispevek['datum'] ?>
+                </td>
+                <td>
+                    <a href="eprispevek/<?= $sprispevek['id_prispevek'] ?>/<?= $sprispevek['id_autor'] ?>"><?= $sprispevek['nazev'] ?></a>
+                </td>
+                <td>
+                    <?= $sprispevek['jmeno_autor'] ?>
+                </td>
+                <td>
+                    <?= $sprispevek['stav'] ?>
+                </td>
+                <td>
+                    <?= $sprispevek['hodnoceni'] ?>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<h4>Prihlášený uživatel: Administrátor &nbsp;&nbsp;&nbsp;&nbsp; <a href="prihlaseni/odhlasit">Odhlásit se</a></h4>

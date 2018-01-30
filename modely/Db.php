@@ -18,6 +18,12 @@ class Db {
             );
         }
     }
+    
+    public static function procedura(){
+        $navrat = self::$spojeni->prepare("CALL `jmeno_autor`();");
+        $navrat->execute($parametry);
+        return $navrat->rowCount();
+    }
 
     //Funkce pro volání jednoho řádku z databáze
     public static function dotazJeden($dotaz, $parametry = array()) {
@@ -54,13 +60,24 @@ class Db {
                         "`) VALUES (" . str_repeat('?,', sizeOf($parametry) - 1) . "?)", array_values($parametry));
     }
 
+    public static function uprav($tabulka, $hodnoty = array(), $podminka, $parametry = array()) {
+        return self::dotaz("UPDATE `$tabulka` SET `" .
+                        implode('` = ?, `', array_keys($hodnoty)) .
+                        "` = ? " . $podminka,
+                        array_merge(array_values($hodnoty), $parametry));
+    }
+
     public static function vyber($tabulka, $hodnoty = array(), $podminka, $parametry = array()) {
         return self::dotazVsechny("SELECT *
-                        FROM `$tabulka`" . $podminka,array_values($parametry));
+                        FROM `$tabulka`" . $podminka, array_values($parametry));
     }
-    
+
     public static function vyberVsechny($tabulka) {
         return self::dotazVsechny("SELECT * FROM `$tabulka`");
+    }
+    
+    public static function vymazZaznam($tabulka, $podminka, $parametry = array()){
+        return self::dotaz("DELETE FROM `$tabulka`" . $podminka, $parametry);
     }
 
 }

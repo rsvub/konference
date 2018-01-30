@@ -11,7 +11,7 @@ class EprispevekKontroler extends Kontroler {
         if ($_POST) {
             try {
                 //$soubor_cesta = $_FILES['soubor']['name'];
-                $spravcePrispevku->editujPrispevek($parametry[0], $parametry[1], $_POST['nazev'], $_POST['text'], $_POST['soubor'], $_POST['soucet']);
+                $spravcePrispevku->editujPrispevek($parametry[0], $parametry[1], $_POST['nazev'], $_POST['text'], $_POST['soubor'], $_POST['soubor'], $_POST['soucet']);
                 $this->pridejZpravu('Příspěvek je úspěšně vložen.');
                 $this->presmeruj('prispevky/' . $parametry[1]);
             } catch (Prispevek $chyba) {
