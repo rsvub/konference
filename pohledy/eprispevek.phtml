@@ -2,13 +2,14 @@
 <form method="post">
     <div class="form-group">
         <?php foreach ($eprispevek as $prispevek) : ?>
-        Název příspěvku: ***<br /><br>
+        <label for="nazev">Název příspěvku: ***</label>
         <input type="text" class="form-control" name="nazev" value="<?= $prispevek['nazev'] ?>" /><br /><br>
-        Popis příspěvku: ***<br /><br>
+        <label for="popis">Popis příspěvku: ***</label>
         <textarea type="text" rows="5" class="form-control" name="text"><?= $prispevek['text'] ?></textarea><br /><br>
-        PDF Soubor:<br /><br>
+        <label for="soubor">PDF Soubor:</label>
         <input type="file"  name="soubor" /><br /><br>
-        Zadejte součet 3 + 4:<br /><br>
+        <input type="hidden" name="jmeno_autor" value="<?= $prispevek['jmeno_autor'] ?>" />
+        <label for="antispam">Zadejte součet 3 + 4:</label>
         <input type="text" class="form-control"  name="soucet" /><br /><br>
         <?php endforeach ?>
     </div>

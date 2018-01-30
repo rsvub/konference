@@ -3,7 +3,7 @@
 class SpravcePrispevku {
 
     //Nový příspěvek do systému
-    public function vlozNovyPrispevek($id_autor, $nazev, $text, $soubor, $soubor_nazev, $soucet) {
+    public function vlozNovyPrispevek($id_autor, $nazev, $text, $soubor, $soubor_nazev, $jmeno_autor, $soucet) {
         if ($soucet != 7)
             throw new ChybaPrispevek('Chybně vyplněný antispam.');
         //$soubor = fopen($file, 'rb');
@@ -13,16 +13,17 @@ class SpravcePrispevku {
             'text' => $text,
             'soubor' => $soubor,
             'soubor_nazev' => $soubor_nazev,
+            'jmeno_autor' => $jmeno_autor,
         );
         //try {
-            Db::vloz('prispevek', $prispevek);
+        Db::vloz('prispevek', $prispevek);
         //} catch (PDOException $chyba) {
         //    throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
         //}
     }
-    
+
     //Nový příspěvek do systému
-    public function editujPrispevek($id_prispevek, $id_autor, $nazev, $text, $soubor, $soubor_nazev, $soucet) {
+    public function editujPrispevek($id_prispevek, $id_autor, $nazev, $text, $soubor, $soubor_nazev, $jmeno_autor, $soucet) {
         if ($soucet != 7)
             throw new ChybaPrispevek('Chybně vyplněný antispam.');
         //$soubor = fopen($file, 'rb');
@@ -33,6 +34,7 @@ class SpravcePrispevku {
             'text' => $text,
             'soubor' => $soubor,
             'soubor_nazev' => $soubor_nazev,
+            'jmeno_autor' => $jmeno_autor,
         );
         try {
             Db::zmen('prispevek', $eprispevek);
@@ -50,11 +52,20 @@ class SpravcePrispevku {
                         AND `id_uzivatel` = ?', array($uzivatel)
         );
     }
-    
+
+    public function zobrazRecenzeUzivatele($uzivatel) {
+        return Db::dotazVsechny('
+                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`, `jmeno_autor`, `stav`,`hodnoceni`
+                        FROM `recenze`, `prispevek`
+                        WHERE `id_autor` = `id_recenzent`
+                        AND `id_autor` = ?', array($uzivatel)
+        );
+    }
+
     //Fuinkce vrátí data jednoho příspěvku podle id příspěvku
     public function zobrazPrispevek($id_prispevek) {
         return Db::dotazVsechny('
-                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`
+                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`, `jmeno_autor`
                         FROM `prispevek`
                         WHERE `id_prispevek` = ?', array($id_prispevek)
         );
@@ -72,7 +83,7 @@ class SpravcePrispevku {
         );
         return Db::vyber('uzivatel', $uzivatel, 'WHERE `id_uzivatel` = ?', $uzivatel);
     }
-    
+
     //Funkce vrátí seznam všech uživatelů
     public function zobrazPrispevky() {
         return Db::vyberVsechny('prispevek');

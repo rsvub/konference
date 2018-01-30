@@ -6,7 +6,8 @@
         <label for="popis">Popis příspěvku: ***</label>
         <textarea type="text" rows="5" class="form-control" name="text" /></textarea><br /><br>
         <label for="file">PDF Soubor:</label>
-        <input type="file"  name="soubor" /><br /><br>
+        <input type="file" name="soubor" /><br /><br>
+        <input type="hidden" name="jmeno_autor" value="<?php foreach ($uzivatele as $uzivatel) : ?><?= $uzivatel['jmeno_prijmeni'] ?><?php endforeach ?>" />
         <label for="antispam">Zadejte součet 3 + 4:</label>
         <input type="text" class="form-control"  name="soucet" /><br /><br>
     </div>
