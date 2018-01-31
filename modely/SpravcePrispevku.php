@@ -55,7 +55,7 @@ class SpravcePrispevku {
             throw new ChybaPrispevek('Nepodarilo se vlozit prispevek.');
         }
     }
-    
+
     //Funkce vloží posudek k příspěvku
     public function vlozPosudek($id, $poznamka, $ciselnik_originalita, $ciselnik_tema, $ciselnik_doporuceni) {
         $sprispevek = array(
@@ -63,6 +63,18 @@ class SpravcePrispevku {
             'ciselnik_originalita' => $ciselnik_originalita,
             'ciselnik_tema' => $ciselnik_tema,
             'ciselnik_doporuceni' => $ciselnik_doporuceni,
+        );
+        try {
+            Db::uprav('recenze', $sprispevek, 'WHERE `id_rprispevek` = ? AND `id_recenzent` = ?', $id);
+        } catch (PDOException $chyba) {
+            throw new ChybaPrispevek('Nepodařilo se upravit záznam.');
+        }
+    }
+    
+        //Funkce vloží posudek k příspěvku
+    public function vlozHodnoceni($id, $hodnoceni) {
+        $sprispevek = array(
+            'hodnoceni' => $hodnoceni,
         );
         try {
             Db::uprav('recenze', $sprispevek, 'WHERE `id_rprispevek` = ? AND `id_recenzent` = ?', $id);
@@ -78,7 +90,7 @@ class SpravcePrispevku {
     //Funkce pro zobrazení všch článků od přihlášeného uživatele
     public function zobrazPrispevkyUzivatele($uzivatel) {
         return Db::dotazVsechny('
-                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`, `jmeno`,`jmeno_prijmeni`, `stav`,`hodnoceni`, `id_uzivatel`
+                        SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`, `jmeno`,`jmeno_prijmeni`, `stav`,`hodnoceno`, `id_uzivatel`
                         FROM `uzivatel`, `prispevek`
                         WHERE `id_autor` = `id_uzivatel`
                         AND `id_uzivatel` = ?', array($uzivatel)
@@ -100,6 +112,15 @@ class SpravcePrispevku {
                         SELECT `id_prispevek`, `datum`, `nazev`, `text`, `id_autor`, `jmeno_autor`
                         FROM `prispevek`
                         WHERE `id_prispevek` = ?', array($id_prispevek)
+        );
+    }
+
+    //Funkce vrátí hodnocení konkrétního příspěvku
+    public function spoctiHodnoceni($id) {
+        return Db::dotazJeden('
+                        SELECT (`ciselnik_originalita` + `ciselnik_tema` + `ciselnik_doporuceni`)/3 AS vysledek
+                        FROM `recenze`
+                        WHERE `id_rprispevek` = ? AND `id_recenzent` = ?', $id
         );
     }
 
@@ -143,7 +164,7 @@ class SpravcePrispevku {
     public function zobrazPrispevkyAdmin() {
         return Db::dotazVsechny('
                         SELECT `nazev`, `jmeno_autor`, `datum`, `id_prispevek`, `stav`, `jmeno_recenzent` 
-                        FROM `prispevek` LEFT JOIN `recenze` ON `id_prispevek`=`id_rprispevek` ORDER BY `datum`'
+                        FROM `prispevek` LEFT JOIN `recenze` ON `id_prispevek`=`id_rprispevek` ORDER BY `datum` DESC'
         );
     }
 

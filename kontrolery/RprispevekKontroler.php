@@ -15,6 +15,9 @@ class RprispevekKontroler extends Kontroler {
             try {
                 $id = array($parametry[0], $parametry[1]);
                 $spravcePrispevku->vlozPosudek($id, $_POST['poznamka'], $_POST['ciselnik_originalita'], $_POST['ciselnik_tema'], $_POST['ciselnik_doporuceni']);
+                $hodnoceni = $spravcePrispevku->spoctiHodnoceni($id);
+                $spravcePrispevku->vlozHodnoceni($id, $hodnoceni['vysledek']);
+                $this->pridejZpravu('Hodnocení: ' . $hodnoceni['vysledek']);
                 $this->pridejZpravu('Posudek je úspěšně vložen.');
                 $this->presmeruj('recenze/' . $parametry[1]);
             } catch (ChybaPrispevek $chyba) {
