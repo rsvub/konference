@@ -5,6 +5,7 @@ class RprispevekKontroler extends Kontroler {
     public function zpracuj($parametry) {
         // Hlavička stránky
         $spravcePrispevku = new SpravcePrispevku();
+        $this->hlavicka['titulek'] = 'Správa recenze';
         if (!empty($parametry[0]) && $parametry[0] == 'stahnout') {
             $spravcePrispevku->stahniPrispevek($parametry[1]);
             $this->presmeruj('rprispevek/' . $parametry[1]);

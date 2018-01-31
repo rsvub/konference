@@ -70,8 +70,20 @@ class SpravcePrispevku {
             throw new ChybaPrispevek('Nepodařilo se upravit záznam.');
         }
     }
-    
-        //Funkce vloží posudek k příspěvku
+
+    //Funkce vloží stav k příspěvku
+    public function vlozStav($id, $stav) {
+        $sprispevek = array(
+            'stav' => $stav,
+        );
+        try {
+            Db::uprav('prispevek', $sprispevek, 'WHERE `id_prispevek` = ?', array($id));
+        } catch (PDOException $chyba) {
+            throw new ChybaPrispevek('Nepodařilo se upravit záznam.');
+        }
+    }
+
+    //Funkce vloží posudek k příspěvku
     public function vlozHodnoceni($id, $hodnoceni) {
         $sprispevek = array(
             'hodnoceni' => $hodnoceni,
@@ -163,7 +175,7 @@ class SpravcePrispevku {
 
     public function zobrazPrispevkyAdmin() {
         return Db::dotazVsechny('
-                        SELECT `nazev`, `jmeno_autor`, `datum`, `id_prispevek`, `stav`, `jmeno_recenzent` 
+                        SELECT `nazev`, `jmeno_autor`, `datum`, `id_prispevek`, `stav`, `jmeno_recenzent`, `hodnoceni`
                         FROM `prispevek` LEFT JOIN `recenze` ON `id_prispevek`=`id_rprispevek` ORDER BY `datum` DESC'
         );
     }
